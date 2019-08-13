@@ -22,6 +22,9 @@ const routes: Routes = [
       },
       {
         path : 'order', loadChildren: './modules/orders.module#OrdersModule'
+      },
+      {
+        path : 'cart', loadChildren: './modules/cart.module#CartModule'
       }
     ]
   },
