@@ -9,14 +9,15 @@ import {Store} from "@ngrx/store";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  cartCount = 0;
   constructor(private _router: Router, private store: Store<any>) {
   }
 
   ngOnInit() {
     this.store.select<any>('productState').subscribe((customerState: any) =>  {
-      debugger;
-      console.log(customerState);
+      if(customerState && customerState.cartData.length > 0) {
+        this.cartCount = customerState.cartData.length;
+      }
       });
   }
 
