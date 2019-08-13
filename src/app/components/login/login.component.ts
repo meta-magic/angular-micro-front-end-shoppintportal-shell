@@ -54,5 +54,7 @@ export class LoginComponent implements OnInit {
       });*/
    // this._route.navigate(['home']);
   }
-
+  onAddUserHandle() {
+    this._route.navigate(['add-user']);
+  }
 }

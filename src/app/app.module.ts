@@ -7,14 +7,15 @@ import {LoginComponent} from "./components/login/login.component";
 import { HomeComponent } from './components/home/home.component';
 import {AmexioWidgetModule} from 'amexio-ng-extensions';
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
-
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AddUserComponent} from "./components/adduser/adduser.component"
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +23,8 @@ import {FormsModule} from "@angular/forms";
     HttpClientModule,
     FormsModule,
     StoreModule.forRoot({}),
-    AmexioWidgetModule
+    AmexioWidgetModule,
+    ReactiveFormsModule
 
   ],
   providers: [],
