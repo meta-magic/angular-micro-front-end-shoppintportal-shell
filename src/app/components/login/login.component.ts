@@ -3,7 +3,10 @@ import {Router} from "@angular/router";
 import {LoginModel} from "../../models/login.model";
 import {HttpService} from "../../services/http.service";
 import {SERVICE_URL} from "../../constant/service.constant";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
+import {CookieService} from 'ngx-cookie-service';
+import {CommonService} from "../../services/common.service";
+
 
 @Component({
   selector: 'app-login',
@@ -14,7 +17,11 @@ export class LoginComponent implements OnInit {
 
   loginModel: LoginModel;
 
-  constructor(private _route: Router, private http: HttpClient, private _httpService: HttpService) {
+  constructor(
+    private _route: Router,
+    private _cService: CommonService,
+    private _cookieService: CookieService,
+    private _httpService: HttpService) {
     this.loginModel = new LoginModel();
   }
 
@@ -22,37 +29,17 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginHandle() {
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-     this.http.post('http://localhost:8082/api/authenticate/validate', {"userName":"gic","password":"gic"}, httpOptions)
-      .subscribe(
-        (res: any)=>{
-          debugger;
-        },
-        (error:any)=>{
-          debugger;
-        },
-        ()=>{
-          debugger;
+    try {
+      this._httpService.restCall(SERVICE_URL.AUTH, 'post', this.loginModel).toPromise()
+        .then((res: any) => {
+          this._cService.showLoader = false;
+          if (res.data.valid) {
+          this._cookieService.set('tokenId', res.data.tokenId);
+          this._route.navigate(['home']);
         }
-      );
-
-
-/*    const headers = new HttpHeaders().append('Content-Type', 'application/json');
- this.http.post(SERVICE_URL.auth, {"userId":"userId","password":"passwordsss"}, {headers}).subscribe((res: any) => {
-   debugger;
- });*/
-
-
- /*   this._httpService.restCall(SERVICE_URL.auth, 'post', this.loginModel).subscribe((res: any) => {
-       debugger;
-      });*/
-   // this._route.navigate(['home']);
+        });
+    } catch (error) {
+    }
   }
   onAddUserHandle() {
     this._route.navigate(['add-user']);

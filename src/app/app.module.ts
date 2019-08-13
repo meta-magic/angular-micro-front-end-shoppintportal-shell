@@ -9,6 +9,8 @@ import {AmexioWidgetModule} from 'amexio-ng-extensions';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AddUserComponent} from "./components/adduser/adduser.component"
+import {CookieService} from 'ngx-cookie-service';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,7 @@ import {AddUserComponent} from "./components/adduser/adduser.component"
     ReactiveFormsModule
 
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
